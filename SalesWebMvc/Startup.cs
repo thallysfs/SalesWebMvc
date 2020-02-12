@@ -43,13 +43,13 @@ namespace SalesWebMvc
             // instância do objeto adicionada
             services.AddScoped<SeedingService>();
             services.AddScoped<SellerService>();
+            services.AddScoped<DepartmentService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /* SeedingService seedingService está resolvendo (Executando a classe que instanciei mais acima).
          * Isso quer dizer que quando o programa rodar a classe será executada
          * */
-
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, SeedingService seedingService)
         {
             if (env.IsDevelopment())

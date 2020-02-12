@@ -12,6 +12,9 @@ namespace SalesWebMvc.Models
         public DateTime DateBirthday { get; set; }
         public double BaseSalary { get; set; }
         public Department Department { get; set; }
+        // chave estrangeira - Padrão: Nome do Model + Id
+        public int DepartmentId { get; set; }
+
         // relação de 1 para muitos - 1 venderdor tem n registro de vendas
         public ICollection<SalesRecord> Sales { get; set; } = new List<SalesRecord>();
 
