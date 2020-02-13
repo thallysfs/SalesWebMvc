@@ -37,6 +37,30 @@ namespace SalesWebMvc.Services
 
         }
 
+        /* Task<List<IGrouping<Department, SalesRecord>>> - necessário para que o .GroupBy funcione lá em baixo
+         * Pois o Group by retorna uma lista do tipo Igroup
+         */
+        public async Task<List<IGrouping<Department, SalesRecord>>> FindByDateGroupAsync(DateTime? minDate, DateTime? maxDate)
+        {
+            var result = from obj in _context.SalesRecord select obj;
+            if (minDate.HasValue)
+            {
+                result = result.Where(x => x.Date >= minDate.Value);
+            }
+            if (maxDate.HasValue)
+            {
+                result = result.Where(x => x.Date >= maxDate.Value);
+            }
+
+            return await result
+                .Include(x => x.Seller) //fazendo o join tabela seller
+                .Include(x => x.Seller.Department) //fazendo o join tabela department
+                .OrderByDescending(x => x.Date)
+                .GroupBy(x => x.Seller.Department)
+                .ToListAsync();
+
+        }
+
 
 
     }
